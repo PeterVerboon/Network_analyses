@@ -3,7 +3,7 @@
 esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titlePlot="Figure"){
   
  
-   dat1 <- dat[,c(subjnr,daynr,beepnr, covs,vars)]
+   dat1 <- dat[,c(subjnr,daynr,beepnr,covs,vars)]
    
   
    # Vector of predictor names (lagged variables)
@@ -23,7 +23,7 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titleP
  
   
   ### Construct lagged variables
-  
+   
   dat2 <- LagESM(dat1, subjnr=subjnr,daynr=daynr,beepnr=beepnr, lagn=1, vars)
   print(head(dat2))
   return()
