@@ -21,9 +21,9 @@ require(dplyr)
    
 ## add additional beeps at the end of each day with missings
   
-daynr <- rep(sort(unique(dat1$daynr)), length(unique(dat1$subjnr)))
-subjnr <- rep(unique(dat1$subjnr), each=length(unique(dat1$daynr)) )
-a <- data.frame(cbind(subjnr,daynr))
+vdaynr <- rep(sort(unique(dat1$daynr)), length(unique(dat1$subjnr)))
+vsubjnr <- rep(unique(dat1$subjnr), each=length(unique(dat1$daynr)) )
+a <- data.frame(cbind(vsubjnr,vdaynr))
 
 a2 <- NULL; a3 <- NULL
 
