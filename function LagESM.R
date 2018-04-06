@@ -14,11 +14,9 @@
 LagESM <- function(dat1, subjnr=subjnr,daynr=daynr,beepnr=beepnr,lagn=1, varnames) {
  
 require(dplyr)
-  eval(quote(subjnr), LagESM)
+
   dat1 <- arrange(dat1, subjnr, daynr, beepnr) 
-  print(head(dat1))
-  print(c(subjnr, daynr,beepnr)) 
-  return()  
+  
  if (lagn > 3) {print("number of lags should not exceed 3"); return() }
    
 ## add additional beeps at the end of each day with missings
