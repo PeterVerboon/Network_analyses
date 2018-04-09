@@ -7,6 +7,7 @@ require(userfriendlyscience)
 require(dplyr)
 require(qgraph)
 require(lme4)
+require(arm)                    # contains se.fixef function used after lmer
 
 ## Activate functions addTrans and lagESM 
 

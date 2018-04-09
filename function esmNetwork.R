@@ -1,11 +1,12 @@
 
 
-esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titlePlot="Figure"){
+esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs=NULL, labs=NULL, titlePlot="Figure"){
   
  
-
    dat1 <- dat[,c(subjnr,daynr,beepnr, covs,vars)]
   
+   
+   if (is.null(labs)) { labs <- vars}
 
     # Vector of predictor names (lagged variables)
    
@@ -14,16 +15,15 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titleP
      varsp <- paste0(varsp, " + ", vars[i],"L1")
    }
    
-   covs <- ifelse(is.null(covs), "", paste0(covs," + "))
+   covs2 <- ifelse(is.null(covs), "", paste0(covs," + "))
    
    # all predictors, only random intercept
-   pred1 <- paste0("(",covs, varsp," + (1|",subjnr,"))")
+   pred1 <- paste0("(",covs2, varsp," + (1|",subjnr,"))")
    
    nvars = length(vars)                 # number of variables involved in the network analyses
    npred = length(covs) + nvars        # number of predictors involved in the analyses
    
  
-  
   ### Construct lagged variables
    
   dat2 <- LagESM(dat1, subjnr=subjnr,daynr=daynr,beepnr=beepnr, lagn=1, vars)
@@ -42,7 +42,7 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titleP
   
   ###  inferring the coefficients or connection strengths for the network from the fitted model1
   
-  require(arm)                    # contains se.fixef function used after lmer
+  
   
   coef1=data.frame(matrix(unlist(lapply(model1,fixef),use.names=FALSE),byrow=TRUE, ncol=(npred+1))) 
   colnames(coef1)=names(fixef(model1[[1]]))
@@ -58,7 +58,7 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titleP
   edge.color <- addTrans(ifelse(E[,3]>0, "green3", "red3"), ifelse(pvals<0.01, 255, 0))
   
   G <- qgraph(E,fade=FALSE,layout="spring",labels=labs,lty=ifelse(E[,3]>0.1,1,5),
-              edge.labels=F,edge.color=edge.color)
+              edge.labels=F,edge.color=edge.color, title=titlePlot)
   
   return(G)
   
@@ -68,10 +68,10 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titleP
 
 # test
 
-a <- esmNetwork(dat=dat1, subjnr="subjnr",daynr="daynr", beepnr="beepnr",
-                vars = vars,
-                covs = "gender",
-                labs = labs)
+
+
+vars <- c("pa_1","pa_2","pa_3","ac_2","ev_1","se_1","so_1_6c","ph_1")
+labs <- c("PA1","PA2","PA3","AC","EV","SE","so","ph")
 
 
 plot(a)
