@@ -14,17 +14,16 @@ dat0 <- getData()             # First remove value labels in SPSS
 
 dat <- dat0
 
-# Select selection of persons if necessary
+# Select subset of persons if necessary
 
 dat <- subset(dat0, mhc_total >= 40)       # select low or high well being
 
 
 # variable names used in network
 
-vars <- c("pa_1","pa_2","pa_3","ac_2","ev_1","se_1")
+vars <- c("pa_1","pa_2","pa_3","ac_2","ev_1","se_1","so_1_6c")
 
-so_1_6c
-
+"so_1_6c"
 
 dat1 <- dat[,c("idnum__c","dayno","beepno", "age","gender",vars)]
 
@@ -45,8 +44,7 @@ qgraph(a, minimum=.3, graph = "cor", sampleSize = 320, layout = "spring")       
  #### Construct lagged variables
 
 
-dat2 <- LagESM(dat1, subjnr="subjnr",daynr="daynr",beepnr="beepnr", lagn=1, vars)
-head(dat2)
+dat2 <- LagESM(dat1, subjnr=subjnr,daynr=dagnr,beepnr=beepnr, lagn=1, vars)
 
 
 
@@ -56,8 +54,6 @@ head(dat2)
 ########################################################
 
 ### Fitting the data with multilevel-VAR method with the lme4 or lmer function
-
-
 
 
 
@@ -117,7 +113,7 @@ rownames(se.coef1)=vars
 ###  Making a Figure of the baseline average population network with Qgraph; pvalue < 0.05
 ###  Only the coefficients from the columns 2 to nnvars+1 (not the intercepts) of the nvars items are needed. 
 
-labs <- c("PA1","PA2","PA3","AC","EV","SE")
+labs <- c("PA1","PA2","PA3","AC","EV","SE","so")
 
 pdf("Figure.pdf", width=6.83,height=6.83,useDingbats=F)
 
