@@ -4,7 +4,7 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titleP
   
  
    dat1 <- dat[,c(subjnr,daynr,beepnr, covs,vars)]
-   
+  
   
    # Vector of predictor names (lagged variables)
    
@@ -12,28 +12,28 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titleP
    for (i in 2:length(vars)) {
      varsp <- paste0(varsp, " + ", vars[i],"L1")
    }
+   
    covs <- ifelse(is.null(covs), "", paste0(covs," + "))
    
    # all predictors, only random intercept
-   pred1 <- paste0("(",covs, varsp," + (1|subjnr))")
+   pred1 <- paste0("(",covs, varsp," + (1|",subjnr,"))")
    
    nvars = length(vars)                 # number of variables involved in the network analyses
-   npred = length(pred0) + nvars        # number of predictors involved in the analyses
+   npred = length(covs) + nvars        # number of predictors involved in the analyses
    
  
   
   ### Construct lagged variables
   
   dat2 <- LagESM(dat1, subjnr=subjnr,daynr=daynr,beepnr=beepnr, lagn=1, vars)
-  print(head(dat2))
-  return()
+  
   
   model1=list()
   
   ### run MLA for all variables in network
   
   for (j in 1:nvars) {
-    ff=as.formula(paste(vars[j],"~",pred1,sep=""))
+    ff=as.formula(paste(vars[j],"~",pred1,sep="")); print(ff)
     model1[[j]]<-lmer(ff,data=dat2,REML=FALSE)
     print(j)
   }
@@ -66,7 +66,16 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titleP
 
 # test
 
-a <- esmNetwork(dat=dat0, subjnr="idnum__c",daynr="dayno", beepnr="beepno",
+a <- esmNetwork(dat=dat1, subjnr="subjnr",daynr="daynr", beepnr="beepnr",
+                vars = vars,
+                covs = "gender",
+                labs = labs)
+
+
+plot(a)
+
+
+a <- esmNetwork(dat=dat, subjnr="idnum__c", daynr = "dayno", beepnr="beepno",
                 vars = vars,
                 covs = "gender",
                 labs = labs)
