@@ -34,7 +34,7 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titleP
   ### run MLA for all variables in network
   
   for (j in 1:nvars) {
-    ff=as.formula(paste(vars[j],"~",pred1,sep="")); print(ff)
+    ff=as.formula(paste(vars[j],"~",pred1,sep="")); 
     model1[[j]]<-lmer(ff,data=dat2,REML=FALSE)
     print(j)
   }
@@ -56,6 +56,7 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs, labs=NULL, titleP
   E <- cbind(from=rep(1:nvars,each=nvars),to=rep(1:nvars,nvars),weigth=unlist(coef1[,(2+npred-nvars):(npred+1)]))
   pvals <- 2*(1-pnorm(abs(unlist(coef1[,(2+npred-nvars):(npred+1)]/se.coef1[,(2+npred-nvars):(npred+1)]) )))
   edge.color <- addTrans(ifelse(E[,3]>0, "green3", "red3"), ifelse(pvals<0.01, 255, 0))
+  
   G <- qgraph(E,fade=FALSE,layout="spring",labels=labs,lty=ifelse(E[,3]>0.1,1,5),
               edge.labels=F,edge.color=edge.color)
   
