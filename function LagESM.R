@@ -13,18 +13,14 @@
 
 LagESM <- function(dat1, subjnr=subjnr,daynr=daynr,beepnr=beepnr,lagn=1, varnames) {
  
-require(dplyr)
 
-  
- if (lagn > 3) {print("number of lags should not exceed 3"); return() }
+if (lagn > 3) {print("number of lags should not exceed 3"); return() }
    
 ## add additional beeps at the end of each day with missings
  
   
-
 vdaynr <- rep(sort(unique(dat1[,daynr])), length(unique(dat1[,subjnr])));  
 vsubjnr <- rep(unique(dat1[,subjnr]), each=length(unique(dat1[,daynr])) )
-
 
 a <- data.frame(cbind(vsubjnr,vdaynr))
 
@@ -35,22 +31,16 @@ if (lagn > 1)  {a2 <- a;   a2[,beepnr] <- max(unique(dat1[,beepnr])) + 2 }
 if (lagn == 3) {a3 <- a;   a3[,beepnr] <- max(unique(dat1[,beepnr])) + 3 }
                 
                
-
 a <- rbind(a1,a2,a3)  ;                            
 a[,c(4:dim(dat1)[2])] <- NA
 names(a) <- names(dat1)
 
-b <- rbind(dat1, a)
-
-
-
-#b <- arrange(b,subjnr,daynr,beepnr)
-s1 <- b[,subjnr]; s2 <- b[,daynr]; s3 <- b[,beepnr]
-b <- b[order(s1,s2,s3),]
-
 b <- as.data.frame(rbind(dat1, a))
 
+# s1 <- b[,subjnr]; s2 <- b[,daynr]; s3 <- b[,beepnr]
+# b <- b[order(s1,s2,s3),]
 
+b <- b[order(b[,subjnr],b[,daynr],b[,beepnr]),]
 
 
 ## add lagged variables 

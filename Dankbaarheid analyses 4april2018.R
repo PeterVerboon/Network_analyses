@@ -41,13 +41,10 @@ a <- cor(dat1[,vars], use = "pairwise.complete.obs")
 qgraph(a, minimum=.3, graph = "cor", sampleSize = 320, layout = "spring")           # graph of correlation matrix
 
 
-
  #### Construct lagged variables
 
 
-dat2 <- LagESM(dat1, subjnr=subjnr,daynr=dagnr,beepnr=beepnr, lagn=1, vars)
-
-
+dat2 <- LagESM(dat1, subjnr="subjnr",daynr="daynr",beepnr="beepnr", lagn=1, vars)
 
 
 ########################################################
