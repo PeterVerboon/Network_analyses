@@ -1,6 +1,6 @@
 
 
-esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs=NULL, labs=NULL, titlePlot="Figure"){
+esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs=NULL,lagn=1, labs=NULL, titlePlot="Figure"){
   
  
    dat1 <- dat[,c(subjnr,daynr,beepnr, covs,vars)]
@@ -10,9 +10,9 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs=NULL, labs=NULL, t
 
     # Vector of predictor names (lagged variables)
    
-   varsp <- paste0(vars[1],"L1")
+   varsp <- paste0(vars[1],"L",lagn)
    for (i in 2:length(vars)) {
-     varsp <- paste0(varsp, " + ", vars[i],"L1")
+     varsp <- paste0(varsp, " + ", vars[i],"L",lagn)
    }
    
    covs2 <- ifelse(is.null(covs), "", paste0(covs," + "))
@@ -26,7 +26,7 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs=NULL, labs=NULL, t
  
   ### Construct lagged variables
    
-  dat2 <- LagESM(dat1, subjnr=subjnr,daynr=daynr,beepnr=beepnr, lagn=1, vars)
+  dat2 <- LagESM(dat1, subjnr=subjnr,daynr=daynr,beepnr=beepnr, lagn=lagn, vars)
   
   
   model1=list()
@@ -70,8 +70,8 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs=NULL, labs=NULL, t
 
 
 
-vars <- c("pa_1","pa_2","pa_3","ac_2","ev_1","se_1","so_1_6c","ph_1")
-labs <- c("PA1","PA2","PA3","AC","EV","SE","so","ph")
+vars <- c("pa_1","pa_2","pa_3","ac_2","ev_1","se_1")
+labs <- c("PA1","PA2","PA3","AC","EV","SE")
 
 
 plot(a)
@@ -80,6 +80,7 @@ plot(a)
 a <- esmNetwork(dat=dat, subjnr="idnum__c", daynr = "dayno", beepnr="beepno",
                 vars = vars,
                 covs = "gender",
+                lagn = 1,
                 labs = labs)
 
 
