@@ -26,7 +26,7 @@ esmNetwork <- function(dat, subjnr, daynr, beepnr, vars, covs=NULL,lagn=1, labs=
  
   ### Construct lagged variables
    
-  dat2 <- LagESM(dat1, subjnr=subjnr,daynr=daynr,beepnr=beepnr, lagn=lagn, vars)
+  dat2 <- LagESM(dat1, subjnr=subjnr,daynr=daynr,beepnr=beepnr, lagn=lagn, varnames=vars)
   
   
   model1=list()
@@ -75,9 +75,9 @@ labs <- c("PA1","PA2","PA3","AC","EV","SE")
 
 
 plot(a)
+names(dat1)
 
-
-a <- esmNetwork(dat=dat, subjnr="idnum__c", daynr = "dayno", beepnr="beepno",
+a <- esmNetwork(dat=dat1, subjnr="idnum__c", daynr = "dayno", beepnr="beepno",
                 vars = vars,
                 covs = "gender",
                 lagn = 1,
