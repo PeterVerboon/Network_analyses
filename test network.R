@@ -6,10 +6,10 @@ devtools::install_github("crsh/papaja@devel")
 
 ## 
 
-devtools::create("lagnetw")    # NB "gemm" wordt in map "gemm" gemaaakt: even kopieren
+devtools::create("lagnetw")    # NB "lagnetw" wordt in map "lagnetw" gemaaakt: even kopieren
 setwd("./lagnetw")
 devtools::document()
-#devtools::use_data(gemmDat, overwrite = TRUE)
+devtools::use_data(DataNews, overwrite = TRUE)
 
 devtools::use_package("lme4")
 devtools::use_package("qgraph")
