@@ -4,7 +4,7 @@
 options(digits = 3)
 
 require(userfriendlyscience)
-require(dplyr)
+#require(dplyr)
 require(qgraph)
 require(lme4)
 require(arm)                    # contains se.fixef function used after lmer
@@ -12,23 +12,25 @@ require(arm)                    # contains se.fixef function used after lmer
 ## Activate functions addTrans and lagESM 
 
 dat0 <- getData()             # First remove value labels in SPSS
-
+#getData(filename="/Users/peterverboon/Documents/Open Universiteit/Onderzoek/Methodologie/Network_analyses/Dankbaarheid_novalue_labs.sav");
 dat <- dat0
 
 # Select subset of persons if necessary
 
 dat <- subset(dat0, mhc_total >= 40)       # select low or high well being
-
+names(dat)
 
 # variable names used in network
 
-vars <- c("pa_1","pa_2","pa_3","ac_2","ev_1","se_1","so_1_6c")
+vars <- c("pa_1","pa_2","pa_3","ac_2","ev_1","se_1")
 
 "so_1_6c"
 
 dat1 <- dat[,c("idnum__c","dayno","beepno", "age","gender",vars)]
 
 dat1 <- dplyr::rename(dat1, subjnr=idnum__c, daynr = dayno, beepnr=beepno)   
+
+dat1 <- dplyr::rename(dat1, beepno=beepnr)   
 
 
 
