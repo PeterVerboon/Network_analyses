@@ -26,7 +26,7 @@ vars <- c("pa_1","pa_2","pa_3","ac_2","ev_1","se_1")
 
 "so_1_6c"
 
-dat1 <- dat[,c("idnum__c","dayno","beepno", "age","gender",vars)]
+dat1 <- dat0[,c("idnum__c","dayno","beepno", "age","gender",vars)]
 
 dat1 <- dplyr::rename(dat1, subjnr=idnum__c, daynr = dayno, beepnr=beepno)   
 

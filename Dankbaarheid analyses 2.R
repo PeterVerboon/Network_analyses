@@ -125,7 +125,7 @@ C$ShortestPathLengths
 ###  the random slope effects are selected in the VarCorr output
 ###  Assumed that there are 1 (intercept) + nvars random effecten
 
-VV <- sqrt(t(matrix(unlist(lapply(model1,function(x){VV=diag(VarCorr(x)$subjnr[2:(nvars+1),2:(nvars+1)])})),nvars,nvars)))
+VV <- sqrt(t(matrix(unlist(lapply(model1,function(x){VV=diag(lme4::VarCorr(x)$subjnr[2:(nvars+1),2:(nvars+1)])})),nvars,nvars)))
 
 
 ###the network figure of individual differences
